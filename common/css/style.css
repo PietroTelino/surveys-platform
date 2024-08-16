@@ -1,0 +1,336 @@
+body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;                
+  font-weight: 300;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  background-color: #fff;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  min-height: 200px;
+  max-height: 200px;
+}
+
+.main-content {
+  flex: 1;
+}
+
+p {
+  text-align: justify;
+  font-size: 18px;
+  color: black;
+}
+
+select {
+  height: 30px;
+  width: 100%;
+}
+
+.margin-bottom--27{
+  margin-bottom: -27px;
+}
+
+.font-weight-400{
+  font-weight: 400;
+}
+
+label {
+  cursor: pointer;
+}
+
+.display-none {
+  display: none;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.action-column {
+  max-width: 134.48px;
+  width: 134.48px;
+}
+
+.creation-date-column {
+  max-width: 50px;
+  width: 50px;
+}
+
+.title-column {
+  max-width: 200px;
+  width: 200px;
+}
+
+.description-column {
+  max-width: 300px;
+  width: 300px;
+}
+
+.dataTables_filter {
+  float: left !important;
+  text-align: left !important;
+  margin-bottom: 10px;
+}
+
+/* Remove a div em que ficava a configuração de itens por página */
+#bootstrap_data_table_wrapper > div:nth-child(1) > div:nth-child(1) {
+  display: none;
+}
+
+/* Remove a div em que ficava a informação de qual página estava */
+/* #bootstrap_data_table_wrapper > div:nth-child(3) > div.col-sm-12.col-md-5 {
+  display: none;
+} */
+
+.no-border {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  cursor: pointer;
+}
+
+.no-border:hover, .no-border:focus {
+  color: lightgray;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  outline: none;
+}
+
+.no-border i {
+  margin: 0;
+}
+
+.show-password {
+  color: lightgray;
+  position: absolute;
+  top: 40px;
+  right: 23px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, table th, table td {
+  border: none !important;
+}
+
+table td, table th {
+  padding: 5px 30px !important;
+}
+
+.table thead th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* .table tbody tr:nth-child(odd) {
+  background-color: #fff;
+  color: #000;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #008cff;
+  color: #fff;
+} */
+
+h1 img{
+  cursor: pointer;
+}
+
+.header{
+  position: fixed;
+  background-color: #000/*#212121*/; 
+  color: white;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+  height: 90px;
+}
+
+.link-blank ul li{
+  list-style: none;
+  margin-left: -33px;
+}
+
+.link-blank ul li a{
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.link-blank ul li a:hover{
+  text-decoration: none;
+  color: #ff9900;
+  transition: all .8s;
+}
+
+.logo h1{
+  font-weight: 100;
+  margin-top: -5px;
+  font-size: 2em;
+}
+
+/*Classe do Menu Superior*/
+.menu{
+  list-style: none;  
+  float: right; 
+  margin-top: 25px;
+  font-size: 16px;
+  /*text-transform: capitalize;*/
+  font-family: 'Inconsolata';
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/*Início - Definindo menu superior*/
+.menu li{
+  position: relative; 
+  float: left; 
+  cursor: pointer;
+}
+
+.menu li{/*a*/
+  color: #fff/*#001050*/; 
+  font-weight: 400;
+  background-color: #000/*#212121/*#87CEFA/*#228B22*/;
+  text-decoration: none; 
+  padding: 5px 10px; 
+  display: block;
+}
+
+.menu li:hover{/*a*/
+  background: #000/*#212121/*#001050*/; 
+  color: #FFFF00/*#feb21a/*#87CEFA*/; 
+}
+
+.menu li ul{
+  position: absolute; 
+  top: 29px; /*25*/ 
+  left: 0; 
+  background-color: #fff; 
+  display: none; 
+}
+
+.menu li:hover ul, .menu li.over ul{
+  display:block;
+}
+
+.menu li ul li{ 
+  text-align: center;
+  display:block; 
+  width:220px;
+}
+/*Fim - Definindo menu superior*/
+
+#botao-menu{
+  display: none;
+}
+
+/*Menu dropdown é um menu a parte, que tem as mesmas opções que o menu superior*/
+#dropdown-menu{
+  display: none;
+  position: fixed;
+}
+
+/*Início - Rodapé*/
+footer{
+  clear: both;
+  font-size: 16px;
+  height: 64px;
+  text-align: center;
+  background-color: #212121;
+  color: #fff;
+  padding: 22px 0;
+  clear: both;
+  position: relative;
+  font-weight: 100;
+  /* letter-spacing: 4px; */
+}
+
+.absolute-bottom{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.texto-rodape{
+  margin-top: 30px;
+}
+
+/*Quando a largura da tela for menor que 992 que é referente ao tamanho large do bootstrap, o css será alterado*/
+@media (max-width: 991px){
+  #top-menu{
+    display: none;
+  }
+
+  #botao-menu{
+    display: inline;
+    float: right;
+    margin-top: 10px;
+    font-size: 50px;
+    font-weight: 100;
+    color: #fff/*#001050*/;
+  }
+  
+  #dropdown-menu{
+    display: block;
+    z-index: 100;
+    margin-top: -100%;
+    text-align: center;
+    background-color: #000/*#212121/*#87CEFA/*#228B22*/;
+    font-size: 16px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+
+  #dropdown-menu ul{
+    list-style: none;
+    /*margin-left: -40px; Foi tirado uma margem de 40 à esquerda pois o bootstrap coloca essa margin*/
+    margin-bottom: 0;
+  }
+  
+  #dropdown-menu ul li{
+    margin: 0;
+
+    padding: 5px;
+    cursor: pointer;    
+    color: #fff/*#001050*/;    
+  }
+  
+  #dropdown-menu ul li:hover{
+    background: #000/*#212121/*#001050*/; 
+    color: #FFFF00/*#feb21a/*#87CEFA*/; 
+  }
+}
+
+/*Small segundo o bootstrap*/
+@media (min-width: 576px) and (max-width: 767px){
+  footer{
+    height: 84px;
+  }
+}
+
+/*Extra Small segundo o bootstrap*/
+@media (max-width: 575px){
+  footer{
+    height: 84px;
+  }
+}

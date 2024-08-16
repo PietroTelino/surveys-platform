@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Enquetes - Votar</title>
+
+    <!--Fontes-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="common/datatable/bootstrap_css_file.min.css" rel="stylesheet">
+
+    <!-- CSS da página	 -->
+    <link rel="stylesheet" type="text/css" href="common/css/style.css">
+
+    <!--Ícone superior da página-->
+    <link rel="icon" type="image/x-icon" href="common/img/ico/icon.ico" />
+
+</head>
+<body>
+    <!--Menu Drop-down-->
+    <div id="dropdown-menu" onblur="closeDropdown()">
+        <ul></ul>
+    </div>
+    <!--Menu Superior-->
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-11 col-sm-11 col-md-11 col-lg-2 col-xl-4 logo">
+                    <h1>							
+                        <!-- <a href="index.php"> -->
+                            <img onclick="navegarSuavemente('#inicio');" src="common/img/logo_122x80.png" title="Logo Pietro Telino" alt="Logo Pietro Telino">
+                        <!-- </a> -->
+                    </h1>
+                </div>
+                <div class="col-1 col-sm-1 col-md-1 col-lg-10 col-xl-8">
+                    <ul class="menu" id="top-menu"></ul>
+                    <label onclick="changeDropdownMenu()" id="botao-menu">&equiv;</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content pt-5" onclick="closeDropdown()">
+        <div class="container pt-5">
+            <div class="row mt-2">
+                <div class="col-12">
+                    <h3 id="selected-survey-title"></h3>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                    <p id="selected-survey-description"></p>                    
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                    <form id="selected-survey-options"></form>
+                    <button class="btn btn-success" id="submit-button" type="button">
+                        Votar
+                    </button>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                    <canvas id="myPieChart" max-width="200" max-height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="font-weight-400">
+        <!-- Modal para alerta-->
+        <div class="modal" id="modalAlert">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> 
+                        <div class="modal-header">
+                            <p class="modal-title" id="message-alert-modal"></p>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                    </div>	
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Rodapé-->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <span>&copy; 2024 - Plataforma de Enquetes | Todos os direitos reservados
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--Javascript-->
+    <script type="text/javascript" src="common/js/model/configuration.js"></script> 
+
+    <!-- Ajax do Usuário -->
+    <script type="text/javascript" src="common/js/model/ajax/ajaxFunctions.js"></script>
+
+    <!-- jQuery -->
+    <script src="common/datatable/jquery-3.5.1.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="common/datatable/bootstrap_js_file.min.js"></script>
+
+    <!-- chart.js -->
+    <script src="common/js/chart.js"></script>
+
+    <script>
+        function showMessage(message){
+            document.getElementById('message-alert-modal').innerHTML = message;
+            $('#modalAlert').modal('show');	
+        }
+
+        const selected_survey = JSON.parse(localStorage.getItem('selected_survey'));
+
+        if (selected_survey) {
+            $('#selected-survey-title').text(selected_survey.survey.title);
+            $('#selected-survey-description').text(selected_survey.survey.description);
+
+            const form = document.getElementById('selected-survey-options');
+            const userVotedOptionId = selected_survey.survey.user_voted_option_id;
+
+            selected_survey.options.forEach((option, index) => {
+                const label = document.createElement('label');
+                label.textContent = option.title;
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'survey-option';
+                radio.value = option.id;
+                radio.id = `option-${index}`;
+                radio.style.marginRight = '10px';
+
+                if (userVotedOptionId) {
+                    radio.disabled = true; // Desabilita a alteração da opção
+                    if (option.id === userVotedOptionId) {
+                        radio.checked = true; // Marca a opção votada
+                    }
+                }
+
+                label.prepend(radio);
+                form.appendChild(label);
+                form.appendChild(document.createElement('br'));
+            });
+
+            if (userVotedOptionId) {
+                document.getElementById('submit-button').style.display = 'none'; // Esconde o botão de votar
+
+                const optionLabels = selected_survey.options.map(option => option.title);
+                const voteCounts = selected_survey.options.map(option => option.votes_count);
+
+                const ctx = document.getElementById('myPieChart').getContext('2d');
+
+                const data = {
+                    labels: optionLabels,
+                    datasets: [{
+                        data: voteCounts,
+                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0'],
+                        hoverOffset: 4
+                    }]
+                };
+
+                const config = {
+                    type: 'pie',
+                    data: data,
+                };
+
+                const myPieChart = new Chart(ctx, config);
+            } else {
+                document.getElementById('myPieChart').style.display = 'none'; // Esconde o gráfico se não houver votação
+            }
+
+            document.getElementById('submit-button').addEventListener('click', function() {
+                const selectedOption = document.querySelector('input[name="survey-option"]:checked');
+
+                if (selectedOption) {
+                    voteSurveyOption(selected_survey.survey.id, selectedOption.value);
+                } else {
+                    showMessage('Você deve selecionar pelo menos uma opção');
+                }
+            });
+        }
+
+        verifyTokenLogin();
+        verifyMessage();
+    </script>
+</body>
+</html>
