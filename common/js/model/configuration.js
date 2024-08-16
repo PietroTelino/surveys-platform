@@ -1,5 +1,5 @@
 // Endereço da API de enquetes
-const API = 'http://localhost:3333';
+const API = 'https://surveys-platform-api.onrender.com';
 
 function changeLocation(new_location) {
     window.location.href = new_location;
