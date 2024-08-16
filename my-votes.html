@@ -60,7 +60,7 @@
                         <thead>
                             <tr>
                                 <th class="title-column">Título</th>
-                                <th class="description-column">Descrição</th>
+                                <th class="description-column d-none d-xs-table-cell d-sm-table-cell">Descrição</th>
                                 <th class="creation-date-column d-none d-sm-table-cell">Criação</th>
                                 <th class="text-center action-column">Ações</th>
                             </tr>
@@ -194,6 +194,7 @@
             table.on('draw', function() {
                 $('#bootstrap_data_table tbody tr').each(function() {
                     $(this).find('td:eq(2)').addClass('d-none d-sm-table-cell');
+                    $(this).find('td:eq(1)').addClass('d-none d-xs-table-cell d-sm-table-cell');
                 });
             });
         });
