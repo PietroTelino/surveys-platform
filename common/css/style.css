@@ -86,6 +86,11 @@ label {
   display: none;
 }
 
+/* Seletor da div que fica o campo de pesquisa */
+#bootstrap_data_table_wrapper > div:nth-child(1) > div:nth-child(2) {
+  margin-top: 20px;
+}
+
 /* Remove a div em que ficava a informação de qual página estava */
 /* #bootstrap_data_table_wrapper > div:nth-child(3) > div.col-sm-12.col-md-5 {
   display: none;
